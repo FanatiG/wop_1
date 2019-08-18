@@ -11,7 +11,6 @@ function getDoc() {
     x.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             myObj = JSON.parse(this.responseText);
-            // console.log(myObj.links);
             showAjax(myObj.links);
         }
     };
@@ -21,12 +20,9 @@ function getDoc() {
 
 function showAjax(elem) {
     for (var prop in elem) {
-        // document.getElementById("first").innerHTML = document.getElementById("first").innerHTML + prop + ': \"' + elem[prop] + '\"' + "<br>";
-        // document.getElementById("first").innerHTML = document.getElementById("first").innerHTML;
         document.getElementById("first").appendChild(a);
         a.innerHTML = elem[prop];
         showInsides(a.innerHTML);
-        // a.href = elem[prop];
         a.style.textDecoration = 'none';
         a.style.color = 'white';
         document.getElementById("first").innerHTML = document.getElementById("first").innerHTML + "<br>";
@@ -34,20 +30,12 @@ function showAjax(elem) {
 };
 
 function showInsides(elem) {
-    // console.log(elem);
     let x = new XMLHttpRequest();
     x.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            // console.log(x);          
             myObj_el1 = JSON.parse(this.responseText);
             if (myObj_el1.data != undefined && x.responseURL.search('products') != -1) {
                 showAjax2(myObj_el1.data);
-                // console.log(myObj_el1.data);
-                // obJoint.push(myObj_el1.data);
-                // obJoint = obJoint.concat(myObj_el1.data);
-                // console.log(myObj_el1);
-                // console.log(myObj_el1.data);
-                // console.log(obJoint);
             }
         }
     };
@@ -123,5 +111,4 @@ function clearFirst() {
     document.getElementById("firstButton").disabled = false;
     document.getElementById("second").innerHTML = null;
     console.clear();
-    // console.log(document.body.innerHTML);
 };
