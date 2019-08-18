@@ -1,9 +1,9 @@
 var myObj;
 var myObj_el1;
-var a = document.createElement("a");
+const a = document.createElement("a");
 var obJoint = [];
-document.getElementById("first").innerHTML = '';
-document.getElementById("second").innerHTML = '';
+
+// window.onload = getDoc();
 
 function getDoc() {
     document.getElementById("firstButton").disabled = true;
@@ -26,7 +26,7 @@ function showAjax(elem) {
         document.getElementById("first").appendChild(a);
         a.innerHTML = elem[prop];
         showInsides(a.innerHTML);
-        a.href = elem[prop];
+        // a.href = elem[prop];
         a.style.textDecoration = 'none';
         a.style.color = 'white';
         document.getElementById("first").innerHTML = document.getElementById("first").innerHTML + "<br>";
@@ -34,18 +34,20 @@ function showAjax(elem) {
 };
 
 function showInsides(elem) {
+    // console.log(elem);
     let x = new XMLHttpRequest();
     x.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            // console.log(x);          
             myObj_el1 = JSON.parse(this.responseText);
-            if(myObj_el1.data != undefined) {
+            if (myObj_el1.data != undefined && x.responseURL.search('products') != -1) {
                 showAjax2(myObj_el1.data);
-                // console.log(myObj_el1);
+                // console.log(myObj_el1.data);
                 // obJoint.push(myObj_el1.data);
-                obJoint = obJoint.concat(myObj_el1.data);
+                // obJoint = obJoint.concat(myObj_el1.data);
                 // console.log(myObj_el1);
                 // console.log(myObj_el1.data);
-                console.log(obJoint);
+                // console.log(obJoint);
             }
         }
     };
@@ -54,19 +56,66 @@ function showInsides(elem) {
 };
 
 function showAjax2(elem) {
-    for (var prop in elem) {
-        // document.getElementById("first").innerHTML = document.getElementById("first").innerHTML + prop + ': \"' + elem[prop] + '\"' + "<br>";
-        // document.getElementById("first").innerHTML = document.getElementById("first").innerHTML;
-        
-        //в elem кидается объект, надо его разбить по строкам/хтмл элементам в свойсвта объекта============
-        document.getElementById("second").appendChild(a);
-        a.innerHTML = JSON.stringify(elem[prop]);
-        a.href = elem[prop];
-        a.style.textDecoration = 'none';
-        a.style.color = 'white';
-        document.getElementById("second").innerHTML = document.getElementById("second").innerHTML + "<br>";
-        // showInsides(a.innerHTML);
+    for (let i = 0; i < elem.length; i++) {
+        const PRODUCT_BLOCK = document.createElement("div");
+        const CATEGORY = document.createElement("p");
+        const TITLE = document.createElement("p");
+        const PRICE = document.createElement("p");
+        const BODY_TYPE = document.createElement("p");
+        const GEARBOX = document.createElement("p");
+        const YEAR = document.createElement("p");
+        const ID = document.createElement("p");
+        PRODUCT_BLOCK.id = i + "_PRODUCT";
+        PRODUCT_BLOCK.style.display = 'flex';
+        PRODUCT_BLOCK.style.flexDirection = 'column';
+        PRODUCT_BLOCK.style.flexWrap = 'wrap';
+        document.getElementById("second").appendChild(PRODUCT_BLOCK);
+
+
+        for (var prop in elem[i].address) {
+            const address = document.createElement("p");
+            address.innerHTML = "address " + elem[i].address[prop];
+            address.id = prop.toUpperCase() + "_ADDRESS";
+            document.getElementById(i + "_PRODUCT").appendChild(address);
+        }
+
+        CATEGORY.innerHTML = "CATEGORY " + elem[i].category;
+        document.getElementById(i + "_PRODUCT").appendChild(CATEGORY);
+
+        TITLE.innerHTML = "TITLE " + elem[i].title;
+        document.getElementById(i + "_PRODUCT").appendChild(TITLE);
+
+        PRICE.innerHTML = "PRICE " + elem[i].price;
+        document.getElementById(i + "_PRODUCT").appendChild(PRICE);
+
+        for (var prop in elem[i].pictures) {
+            const pictures = document.createElement("a");
+            pictures.innerHTML = "address " + elem[i].pictures[prop];
+            pictures.href = elem[i].pictures[prop];
+            pictures.id = prop.toUpperCase() + "_ADDRESS";
+            document.getElementById(i + "_PRODUCT").appendChild(pictures);
+        }
+
+        BODY_TYPE.innerHTML = "BODY_TYPE " + elem[i].BODY_TYPE;
+        document.getElementById(i + "_PRODUCT").appendChild(BODY_TYPE);
+
+        GEARBOX.innerHTML = "GEARBOX " + elem[i].GEARBOX;
+        document.getElementById(i + "_PRODUCT").appendChild(GEARBOX);
+
+        YEAR.innerHTML = "YEAR " + elem[i].YEAR;
+        document.getElementById(i + "_PRODUCT").appendChild(YEAR);
+
+        for (var prop in elem[i].relationships) {
+            const relationships = document.createElement("p");
+            relationships.innerHTML = "relationships " + elem[i].relationships[prop];
+            relationships.id = prop.toUpperCase() + "_RELATIONSHIPS";
+            document.getElementById(i + "_PRODUCT").appendChild(relationships);
+        }
+
+        ID.innerHTML = "id " + elem[i].id;
+        document.getElementById(i + "_PRODUCT").appendChild(ID);
     }
+
 };
 
 function clearFirst() {
@@ -74,4 +123,5 @@ function clearFirst() {
     document.getElementById("firstButton").disabled = false;
     document.getElementById("second").innerHTML = null;
     console.clear();
+    // console.log(document.body.innerHTML);
 };
