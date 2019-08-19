@@ -1,9 +1,10 @@
+"use strict";
+
 var myObj;
 var myObj_el1;
 const a = document.createElement("a");
 var obJoint = [];
 
-// window.onload = getDoc();
 
 function getDoc() {
     document.getElementById("firstButton").disabled = true;
@@ -77,11 +78,19 @@ function showAjax2(elem) {
         document.getElementById(i + "_PRODUCT").appendChild(PRICE);
 
         for (var prop in elem[i].pictures) {
-            const pictures = document.createElement("a");
+            const pictures = document.createElement("img");
             pictures.innerHTML = "address " + elem[i].pictures[prop];
-            pictures.href = elem[i].pictures[prop];
+            pictures.src = elem[i].pictures[prop];
             pictures.id = prop.toUpperCase() + "_ADDRESS";
             document.getElementById(i + "_PRODUCT").appendChild(pictures);
+            function getMeta(url) {
+                var img = new Image();
+                img.src = url;
+                img.onload = function() {
+                    pictures.width = this.width;
+                }
+            }
+            getMeta(pictures.src);
         }
 
         BODY_TYPE.innerHTML = "BODY_TYPE " + elem[i].BODY_TYPE;
