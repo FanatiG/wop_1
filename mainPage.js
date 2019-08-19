@@ -2,7 +2,6 @@
 
 var myObj;
 var myObj_el1;
-const a = document.createElement("a");
 var obJoint = [];
 
 
