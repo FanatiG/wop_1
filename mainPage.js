@@ -83,14 +83,14 @@ function showAjax2(elem) {
             pictures.src = elem[i].pictures[prop];
             pictures.id = prop.toUpperCase() + "_ADDRESS";
             document.getElementById(i + "_PRODUCT").appendChild(pictures);
-            function getMeta(url) {
+            function setNativeSize(url) {
                 var img = new Image();
                 img.src = url;
                 img.onload = function() {
                     pictures.width = this.width;
                 }
             }
-            getMeta(pictures.src);
+            setNativeSize(pictures.src);
         }
 
         BODY_TYPE.innerHTML = "BODY_TYPE " + elem[i].BODY_TYPE;
