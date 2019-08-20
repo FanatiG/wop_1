@@ -82,10 +82,11 @@ function showAjax2(elem) {
             pictures.src = elem[i].pictures[prop];
             pictures.id = prop.toUpperCase() + "_ADDRESS";
             document.getElementById(i + "_PRODUCT").appendChild(pictures);
+
             function setNativeSize(url) {
                 var img = new Image();
                 img.src = url;
-                img.onload = function() {
+                img.onload = function () {
                     pictures.width = this.width;
                 }
             }
@@ -118,5 +119,4 @@ function clearFirst() {
     document.getElementById("first").innerHTML = null;
     document.getElementById("firstButton").disabled = false;
     document.getElementById("second").innerHTML = null;
-    console.clear();
 };
