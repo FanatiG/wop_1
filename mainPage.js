@@ -3,7 +3,7 @@
 var myObj;
 var myObj_el1;
 var obJoint = [];
-
+const STRING = document.createElement("a");
 
 function getDoc() {
     document.getElementById("firstButton").disabled = true;
@@ -12,7 +12,7 @@ function getDoc() {
         if (this.readyState == 4 && this.status == 200) {
             myObj = JSON.parse(this.responseText);
             showAjax(myObj.links);
-        }
+        };
     };
     x.open("GET", "https://avito.dump.academy/", true);
     x.send();
@@ -20,13 +20,13 @@ function getDoc() {
 
 function showAjax(elem) {
     for (var prop in elem) {
-        document.getElementById("first").appendChild(a);
-        a.innerHTML = elem[prop];
-        showInsides(a.innerHTML);
-        a.style.textDecoration = 'none';
-        a.style.color = 'white';
+        document.getElementById("first").appendChild(STRING);
+        STRING.innerHTML = elem[prop];
+        showInsides(STRING.innerHTML);
+        STRING.style.textDecoration = 'none';
+        STRING.style.color = 'white';
         document.getElementById("first").innerHTML = document.getElementById("first").innerHTML + "<br>";
-    }
+    };
 };
 
 function showInsides(elem) {
@@ -36,8 +36,8 @@ function showInsides(elem) {
             myObj_el1 = JSON.parse(this.responseText);
             if (myObj_el1.data != undefined && x.responseURL.search('products') != -1) {
                 showAjax2(myObj_el1.data);
-            }
-        }
+            };
+        };
     };
     x.open("GET", elem, true);
     x.send();
@@ -49,6 +49,7 @@ function showAjax2(elem) {
         const CATEGORY = document.createElement("p");
         const TITLE = document.createElement("p");
         const PRICE = document.createElement("p");
+        const IMG_SET = document.createElement("div");
         const BODY_TYPE = document.createElement("p");
         const GEARBOX = document.createElement("p");
         const YEAR = document.createElement("p");
@@ -59,13 +60,12 @@ function showAjax2(elem) {
         PRODUCT_BLOCK.style.flexWrap = 'wrap';
         document.getElementById("second").appendChild(PRODUCT_BLOCK);
 
-
         for (var prop in elem[i].address) {
             const address = document.createElement("p");
             address.innerHTML = "address " + elem[i].address[prop];
             address.id = prop.toUpperCase() + "_ADDRESS";
             document.getElementById(i + "_PRODUCT").appendChild(address);
-        }
+        };
 
         CATEGORY.innerHTML = "CATEGORY " + elem[i].category;
         document.getElementById(i + "_PRODUCT").appendChild(CATEGORY);
@@ -76,22 +76,29 @@ function showAjax2(elem) {
         PRICE.innerHTML = "PRICE " + elem[i].price;
         document.getElementById(i + "_PRODUCT").appendChild(PRICE);
 
+        IMG_SET.id = "IMG_SET_" + i;
+        IMG_SET.style.display = "flex";
+        // IMG_SET.style.justifyContent = "center";
+        IMG_SET.style.alignContent = "flex-start";
+        IMG_SET.style.flexWrap = "wrap";
+        document.getElementById(i + "_PRODUCT").appendChild(IMG_SET);
+
         for (var prop in elem[i].pictures) {
             const pictures = document.createElement("img");
             pictures.innerHTML = "address " + elem[i].pictures[prop];
             pictures.src = elem[i].pictures[prop];
             pictures.id = prop.toUpperCase() + "_ADDRESS";
-            document.getElementById(i + "_PRODUCT").appendChild(pictures);
+            document.getElementById("IMG_SET_" + i).appendChild(pictures);
 
             function setNativeSize(url) {
                 var img = new Image();
                 img.src = url;
                 img.onload = function () {
                     pictures.width = this.width;
-                }
-            }
+                };
+            };
             setNativeSize(pictures.src);
-        }
+        };
 
         BODY_TYPE.innerHTML = "BODY_TYPE " + elem[i].BODY_TYPE;
         document.getElementById(i + "_PRODUCT").appendChild(BODY_TYPE);
@@ -107,12 +114,11 @@ function showAjax2(elem) {
             relationships.innerHTML = "relationships " + elem[i].relationships[prop];
             relationships.id = prop.toUpperCase() + "_RELATIONSHIPS";
             document.getElementById(i + "_PRODUCT").appendChild(relationships);
-        }
+        };
 
         ID.innerHTML = "id " + elem[i].id;
         document.getElementById(i + "_PRODUCT").appendChild(ID);
-    }
-
+    };
 };
 
 function clearFirst() {
